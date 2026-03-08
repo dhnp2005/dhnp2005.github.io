@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thiệp 8/3 – Chúc Kim Anh</title>
+    <style>
+        /* ================== GLOBAL STYLES ================== */
+        :root {
+            --bg: #ffe6f0;
+            --card: rgba(255, 255, 255, 0.82);
+            --text: #3a1e3f;
+            --muted: #6b4b6c;
+            --accent: #ff4081;
+            --accent-2: #d81b60;
+            --shadow: 0 18px 45px rgba(0, 0, 0, 0.16);
+            --radius: 26px;
+            --radius-sm: 16px;
+            --transition: 260ms ease;
+            --font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: var(--font);
+            background: radial-gradient(circle at top, #ffe6f0 0%, #f7d4e2 55%, #f2c6dc 100%);
+            color: var(--text);
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* ================== HEART EFFECT ================== */
+        .heart {
+            position: fixed;
+            pointer-events: none;
+            top: -5vh;
+            font-size: 1.6rem;
+            opacity: 0;
+            animation: fall 5s linear forwards;
+            z-index: 1;
+            text-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) scale(0.84);
+                opacity: 0;
+            }
+
+            15% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(110vh) rotate(14deg) scale(1.1);
+                opacity: 0;
+            }
+        }
+
+        /* ================== LOGIN CARD ================== */
+        .card {
+            position: relative;
+            width: min(420px, 100%);
+            padding: 32px 32px 28px;
+            border-radius: var(--radius);
+            background: var(--card);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 600ms ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .card__title {
+            margin: 0;
+            font-size: 1.7rem;
+            letter-spacing: 0.03em;
+            text-align: center;
+            color: var(--accent-2);
+        }
+
+        .card__subtitle {
+            margin: 10px auto 22px;
+            text-align: center;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .form {
+            display: grid;
+            gap: 16px;
+        }
+
+        .input-group {
+            display: grid;
+            gap: 6px;
+        }
+
+        .input-group label {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(119, 70, 115, 0.35);
+            background: rgba(255, 255, 255, 0.85);
+            font-size: 1rem;
+            outline: none;
+            transition: border var(--transition), box-shadow var(--transition);
+        }
+
+        .input-group input:focus {
+            border-color: rgba(255, 64, 129, 0.8);
+            box-shadow: 0 0 0 4px rgba(255, 64, 129, 0.16);
+        }
+
+        .button {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: var(--radius-sm);
+            border: none;
+            cursor: pointer;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            box-shadow: 0 10px 18px rgba(216, 27, 96, 0.35);
+            transition: transform var(--transition), box-shadow var(--transition);
+            position: relative;
+            overflow: hidden;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 24px rgba(216, 27, 96, 0.38);
+        }
+
+        .button:active {
+            transform: translateY(1px);
+        }
+
+        .button::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            transform: translateX(-100%);
+            background: rgba(255, 255, 255, 0.25);
+            filter: blur(10px);
+            transition: transform 0.6s ease;
+        }
+
+        .button:hover::after {
+            transform: translateX(0);
+        }
+
+        .message {
+            font-size: 0.95rem;
+            text-align: center;
+            color: var(--accent-2);
+            min-height: 22px;
+            margin-top: -4px;
+        }
+
+        /* ================== POST-LOGIN CARD ================== */
+        .postcard {
+            display: none;
+            position: relative;
+            width: min(520px, 100%);
+            padding: 30px;
+            border-radius: var(--radius);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(255, 222, 240, 0.95));
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            overflow: hidden;
+            backdrop-filter: blur(14px);
+            opacity: 0;
+            animation: fadeIn 600ms ease forwards;
+        }
+
+        .postcard__title {
+            margin: 0;
+            font-size: 2rem;
+            text-align: center;
+            letter-spacing: 0.04em;
+            color: var(--accent-2);
+        }
+
+        .image-frame {
+            margin: 22px auto 18px;
+            width: 100%;
+            max-width: 520px;
+            aspect-ratio: 16 / 10;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 22px 45px rgba(0, 0, 0, 0.18);
+            transition: transform var(--transition), box-shadow var(--transition);
+            position: relative;
+            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0));
+        }
+
+        .image-frame::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            pointer-events: none;
+        }
+
+        .image-frame img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            object-position: center 35%;
+            transition: transform 0.6s ease;
+        }
+
+        .image-frame:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 28px 55px rgba(0, 0, 0, 0.24);
+        }
+
+        .image-frame:hover img {
+            transform: scale(1.04);
+        }
+
+        .postcard__message {
+            margin: 0;
+            font-size: 1.05rem;
+            line-height: 1.55;
+            color: var(--text);
+            text-align: center;
+        }
+
+        .postcard__footer {
+            margin-top: 20px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+        }
+
+        /* ================== RESPONSIVE ================== */
+        @media (max-width: 440px) {
+            .card {
+                padding: 24px 20px 22px;
+            }
+
+            .postcard {
+                padding: 24px 20px;
+            }
+
+            .image-frame img {
+                height: 210px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Login screen -->
+    <div class="card" id="loginCard" aria-label="Đăng nhập">
+        <h1 class="card__title">Chào mừng</h1>
+        <p class="card__subtitle">Điền tên và ngày sinh (dd/mm/yyyy) để vào thiệp nhé.</p>
+
+        <form class="form" id="loginForm">
+            <div class="input-group">
+                <label for="nameInput">Tên</label>
+                <input id="nameInput" name="name" type="text" autocomplete="name" placeholder="Quan Kim Anh" required />
+            </div>
+
+            <div class="input-group">
+                <label for="passwordInput">Mật khẩu (dd/mm/yyyy)</label>
+                <input id="passwordInput" name="password" type="password" autocomplete="current-password"
+                    placeholder="14/03/1996" required />
+            </div>
+
+            <button class="button" type="submit" id="loginButton">
+                Đăng nhập
+            </button>
+
+            <div class="message" id="messageArea"></div>
+        </form>
+    </div>
+
+    <!-- Post-login greeting card -->
+    <section class="postcard" id="postCard" aria-label="Thiệp chúc mừng">
+        <h1 class="postcard__title">Chúc mừng ngày 8/3</h1>
+
+        <div class="image-frame">
+            <!-- Thay đường dẫn ảnh bên dưới nếu muốn ảnh khác -->
+            <img id="cardImage" src="z7599111115949_21ad8072e2df5ab2bbb60ac75818f95d.jpg" alt="Hình kỷ niệm lãng mạn" />
+        </div>
+
+        <p class="postcard__message">
+            Chúc em một ngày 8/3 thật rạng rỡ, ngập tràn những nụ cười và yêu thương.
+            Mong mỗi ngày sẽ là một bông hoa mới, mỗi bước đi đều có ánh sáng và tiếng cười.
+            <br /><br />
+            Từ một người luôn nghĩ về em và thật lòng mong em hạnh phúc.
+        </p>
+
+        <p class="postcard__footer">
+            From someone who wishes you always happy ❤️
+        </p>
+    </section>
+
+    <script>
+        /* ======= CẤU HÌNH ======= */
+        const VALID_NAME = "Quan Kim Anh";
+        const VALID_PASSWORD = "15/04/2007"; // Đổi sang ngày sinh thật nếu cần
+
+        /* ======= HELPER ======= */
+        function randomBetween(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        function createFallingHeart() {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.textContent = "❤️";
+            heart.style.left = `${randomBetween(5, 95)}vw`;
+            heart.style.fontSize = `${randomBetween(18, 28)}px`;
+            heart.style.opacity = randomBetween(0.55, 1);
+            heart.style.animationDuration = `${randomBetween(4.5, 6.5)}s`;
+            heart.style.transform = `rotate(${randomBetween(-12, 12)}deg)`;
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 6500);
+        }
+
+        function showMessage(text, isError = true) {
+            const messageArea = document.getElementById("messageArea");
+            messageArea.textContent = text;
+            messageArea.style.color = isError ? "var(--accent-2)" : "#2d7a66";
+        }
+
+        /* ======= LOGIN ======= */
+        const loginForm = document.getElementById("loginForm");
+        const loginCard = document.getElementById("loginCard");
+        const postCard = document.getElementById("postCard");
+
+        function doLogin(nameValue, passwordValue) {
+            if (nameValue === VALID_NAME && passwordValue === VALID_PASSWORD) {
+                showMessage("Đăng nhập thành công! Vào thiệp ngay nhé 💌", false);
+                loginCard.style.display = "none";
+                postCard.style.display = "block";
+                postCard.style.animation = "fadeIn 600ms ease forwards";
+                document.body.style.overflow = "hidden";
+                return true;
+            }
+
+            showMessage("Sai tên hoặc ngày sinh rồi, thử lại nhé ❤️", true);
+            return false;
+        }
+
+        loginForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const nameValue = document.getElementById("nameInput").value.trim();
+            const passwordValue = document.getElementById("passwordInput").value.trim();
+
+            doLogin(nameValue, passwordValue);
+        });
+
+        function tryAutoLogin() {
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get("name");
+            const password = params.get("password");
+            const auto = params.get("auto");
+
+            if (!name || !password) return;
+            if (auto && auto.toLowerCase() !== "1" && auto.toLowerCase() !== "true") return;
+
+            doLogin(name.trim(), password.trim());
+        }
+
+        tryAutoLogin();
+
+        /* ======= START EFFECT ======= */
+        setInterval(createFallingHeart, 260);
+
+        // Tạo vài trái tim đầu tiên để trang không trống khi load.
+        for (let i = 0; i < 6; i += 1) {
+            setTimeout(createFallingHeart, i * 140);
+        }
+    </script>
+</body>
+
+</html>
